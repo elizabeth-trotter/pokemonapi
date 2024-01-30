@@ -1,39 +1,5 @@
 import { saveToLocalStorage, getLocalStorage, removeFromLocalStorage } from "./localstorage.js";
 
-// // IDs
-// let digimonImg = document.getElementById("digimonImg");
-// let digimonName = document.getElementById("digimonName");
-// let digimonStatus = document.getElementById("digimonStatus");
-// let favoriteBtn = document.getElementById("favoriteBtn");
-// let digimonInput = document.getElementById("digimonInput");
-
-// let digimon = "";
-
-// const DigimonApi = async (digimon) => {
-//     const promise = await fetch(`https://digimon-api.vercel.app/api/digimon/name/${digimon}`);
-//     const data = await promise.json();
-//     // console.log(data);
-//     return data;
-// }
-
-// // DigimonApi("agumon");
-
-// digimonInput.addEventListener('keydown', async (event) => {
-//     //On enter I want this function to run
-//     if(event.key === "Enter"){
-//         digimon = await DigimonApi(event.target.value);
-//         console.log(digimon);
-//         digimonImg.src = digimon[0].img;
-//         digimonName.textContent = digimon[0].name;
-//         digimonStatus.textContent = digimon[0].level;
-//     }
-// });
-
-// favoriteBtn.addEventListener('click', () => {
-//     saveToLocalStorage(digimon[0].name);
-// });
-
-
 // IDs
 // Pokemon Fields
 let name = document.getElementById("pokeName");
@@ -52,39 +18,118 @@ let evolutionOneName = document.getElementById("evolutionOneName");
 let favHeartBtn = document.getElementById("favHeartBtn");
 let seeFavoritesBtn = document.getElementById("seeFavoritesBtn");
 
+let shinyFormBtn = document.getElementById("shinyFormBtn");
+let shinyIcon = document.getElementById("shinyIcon");
+
 let searchBtn = document.getElementById("searchBtn");
 let randomBtn = document.getElementById("randomBtn");
 let inputField = document.getElementById("inputField");
 
 // Global JavaScript Variabls
-let currentPokemon = "pikachu";
+let currentPokemon, pokemonApiData, pokeImgDefault;
 
 // Search
-searchBtn.addEventListener('click', () => {
-    // call api to update fields
+searchBtn.addEventListener('click', async () => {
+    if (inputField.value) {
+        currentPokemon = await pokemonApi(inputField.value.toLowerCase());
+    }
 });
 
-randomBtn.addEventListener('click', () => {
+randomBtn.addEventListener('click', async () => {
     const randNum = Math.floor(Math.random() * 10); // find number of pokedex?
-    // call api to update fields
+    if (inputField.value) {
+        currentPokemon = await pokemonApi(inputField.value.toLowerCase());
+    }
 });
 
-inputField.addEventListener('keydown', (event) => {
-    if(inputField.value){
-        if(event.key === 'Enter'){
-            // call api to update fields
+inputField.addEventListener('keydown', async (event) => {
+    if (inputField.value) {
+        if (event.key === 'Enter') {
+            currentPokemon = await pokemonApi(event.target.value.toLowerCase());
         }
     }
 });
 
-// Favorites
+// Favorite Icon Button
 favHeartBtn.addEventListener('click', () => {
     saveToLocalStorage(currentPokemon);
 });
 
-//API Call
-const pokemonApi = async (currentPokemon) => {
-    const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentPokemon}/`);
-    const promise = await data.json();
-    console.log(data);
+//Pokemon Main API Call
+const pokemonApi = async (pokemon) => {
+    const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`);
+    pokemonApiData = await promise.json();
+    console.log(pokemonApiData);
+
+    let pokeName = pokemonApiData.name;
+    name.textContent = pokeName.charAt(0).toUpperCase() + pokeName.slice(1);
+
+    let pokeNum = pokemonApiData.id;
+    switch (pokeNum.toString().length) {
+        case 1:
+            pokeNum = "00" + pokeNum;
+            break;
+        case 2:
+            pokeNum = "0" + pokeNum;
+            break;
+        default:
+            break;
+    }
+    num.textContent = pokeNum;
+
+    img.src = pokemonApiData.sprites.other["official-artwork"].front_default;
+    pokeImgDefault = true;
+    shinyIcon.src = "./assets/Sparkle.png";
+
+    //Shiny Icon Button
+    shinyFormBtn.addEventListener('click', () => {
+        if (pokeImgDefault) {
+            img.src = pokemonApiData.sprites.other["official-artwork"].front_default;
+            pokeImgDefault = false;
+            shinyIcon.src = "./assets/Sparkle.png";
+            // console.log("clicked");
+        } else {
+            img.src = pokemonApiData.sprites.other["official-artwork"].front_shiny;
+            pokeImgDefault = true;
+            shinyIcon.src = "./assets/SparkleFilled.png";
+            // console.log("clicked");
+        }
+    });
+
+    let pokeTypesArr = pokemonApiData.types;
+    let pokeTypes = [];
+    pokeTypesArr.forEach(element => {
+        element = element.type.name;
+        pokeTypes.push(element.charAt(0).toUpperCase() + element.slice(1));
+    });
+    type.textContent = pokeTypes.join(" + ");
+
+    let pokemonEncounterData = await encounterApi(pokemon);
+    console.log(pokemonEncounterData);
+    if (!pokemonEncounterData.length == 0) {
+        location.textContent = pokemonEncounterData[0]["location_area"].name;
+    } else {
+        location.textContent = "N/a";
+    }
+
+    let pokeAbilitiesArr = pokemonApiData.abilities;
+    const pokeAbilities = pokeAbilitiesArr.map(element => capitalizeFirstLetter(element.ability.name));
+    abilities.textContent = pokeAbilities.join(" + ");
+
+    const pokeMovesArr = pokemonApiData.moves;
+    const pokeMoves = pokeMovesArr.map(element => capitalizeFirstLetter(element.move.name));
+    moves.textContent = pokeMoves.join(", ");
+
+    // How do i want to do evolution section?
+
 };
+
+const encounterApi = async (pokemon) => {
+    const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/encounters`);
+    return await promise.json();
+};
+
+// Formatting
+function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
