@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fonts */
+.montserrat {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.palette-mosaic {
+    font-family: 'Palette Mosaic', system-ui;
+}
+
+.bg-yellow {
+    background-color: #E2B84C;
+}
+
