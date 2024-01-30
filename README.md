@@ -7,10 +7,10 @@
 Key Features:
 
 - Ability to search by name and Pokédex Number
-- Ability to get a random pokemon
+- Ability to get a random Pokémon
 - Inventory contains Gen 1 - 5 Pokémon
-- Images contains both default and shiny forms
-- Info provided for each Pokemon: 
+- Images contain both default and shiny forms
+- Info provided for each Pokémon: 
     1. Name
     2. Element Typing
     3. Location
