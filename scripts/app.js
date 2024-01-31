@@ -1,7 +1,6 @@
 import { saveToLocalStorage, getLocalStorage, removeFromLocalStorage } from "./localstorage.js";
 
-// IDs
-// Pokemon Fields
+// IDs - Pokemon Fields
 let name = document.getElementById("pokeName");
 let img = document.getElementById("pokeImg");
 let num = document.getElementById("pokeNum");
@@ -10,16 +9,15 @@ let type = document.getElementById("pokeType");
 let location = document.getElementById("pokeLocation");
 let abilities = document.getElementById("pokeAbilities");
 let moves = document.getElementById("pokeMoves");
-// How do i want to do this section?
 let evolutionDiv = document.getElementById("evolutionDiv");
-let evolutionOneImg = document.getElementById("evolutionOneImg");
-let evolutionOneName = document.getElementById("evolutionOneName");
+
 // Background
 let background = document.getElementById("background");
 
 // Buttons
 let favHeartBtn = document.getElementById("favHeartBtn");
 let seeFavoritesBtn = document.getElementById("seeFavoritesBtn");
+let heartIcon = document.getElementById("heartIcon");
 
 let shinyFormBtn = document.getElementById("shinyFormBtn");
 let shinyIcon = document.getElementById("shinyIcon");
@@ -55,8 +53,69 @@ inputField.addEventListener('keydown', async (event) => {
 
 // Favorite Icon Button
 favHeartBtn.addEventListener('click', () => {
-    saveToLocalStorage(currentPokemon);
+    const favorites = getLocalStorage();
+
+    if (favorites.includes(pokemonApiData.name)) {
+        removeFromLocalStorage(pokemonApiData.name);
+        heartIcon.src = "./assets/HeartEmpty.png";
+    } else {
+        saveToLocalStorage(pokemonApiData.name);
+        heartIcon.src = "./assets/HeartFilled.png";
+    }
+
 });
+
+// getFavoritesBtn.addEventListener('click', () => {
+//     // this retrieves our data from local storage and stores it into favorites variable
+//     let favorites = getLocalStorage();
+
+//     // clears div so the array displayed will not constantly repeat
+//     getFavoritesDiv.textContent = "";
+
+//     // map through each element in our array
+//     favorites.map(digiName => {
+//         // creating a p tag dynamically
+//         let p = document.createElement("p"); // for every digimon in this array, we create a p tag
+
+//         // setting text content to digiName
+//         p.textContent = digiName;
+
+//         // className replaces all classes with our new classes
+//         p.className = "text-lg font-medium text-gray-500 dark:text-white"
+
+//         // creating button dynamically
+//         let button = document.createElement("button");
+
+//         button.type = "button";
+//         button.textContent = "X";
+//         // classList allows us to be a little more concise, it doesnt replace all classes
+//         button.classList.add(
+//             "text-gray-400",
+//             "bg-transparent",
+//             "hover:bg-gray-200",
+//             "hover:text-gray-900",
+//             "rounded-lg",
+//             "text-sm",
+//             "w-8",
+//             "h-8",
+//             "justify-end",
+//             "dark:hover:bg-gray-600",
+//             "dark:hover:text-white"
+//         );
+
+//         // creating addeventlistener for button to remove digiName from favorites when delete is clicked
+//         button.addEventListener('click', () => {
+//             removeFromLocalStorage(digiName);
+//             p.remove();
+//         });
+
+//         // appending button to p tag
+//         p.append(button);
+
+//         // appending p tag to div
+//         getFavoritesDiv.append(p);
+//     });
+// });
 
 //Shiny Icon Button
 shinyFormBtn.addEventListener('click', () => {
@@ -78,6 +137,15 @@ const pokemonApi = async (pokemon) => {
     const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`);
     pokemonApiData = await promise.json();
     console.log(pokemonApiData);
+
+    // favoriteDefault = true; **need to update
+    const favorites = getLocalStorage();
+
+    if (!favorites.includes(pokemonApiData.name)) {
+        heartIcon.src = "./assets/HeartEmpty.png";
+    } else {
+        heartIcon.src = "./assets/HeartFilled.png";
+    }
 
     let pokeName = pokemonApiData.name;
     name.textContent = pokeName.charAt(0).toUpperCase() + pokeName.slice(1);
@@ -149,18 +217,18 @@ const pokemonApi = async (pokemon) => {
             });
         };
         traverseEvolutions(evolutionData.chain);
-        
+
         evolutionDiv.innerHTML = "";
         evolutionArr.map(async (pokemonName) => {
             const div = document.createElement('div');
             div.className = ("flex-grow text-center px-5");
-            
+
             const imgPromise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}/`);
             const imgData = await imgPromise.json();
-            
+
             const imgTag = document.createElement('img');
             imgTag.src = imgData.sprites.other["official-artwork"].front_default;
-            
+
             const p = document.createElement('p');
             p.textContent = capitalizeFirstLetter(pokemonName);
 
