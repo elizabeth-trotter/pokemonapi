@@ -11,6 +11,7 @@ let location = document.getElementById("pokeLocation");
 let abilities = document.getElementById("pokeAbilities");
 let moves = document.getElementById("pokeMoves");
 // How do i want to do this section?
+let evolutionDiv = document.getElementById("evolutionDiv");
 let evolutionOneImg = document.getElementById("evolutionOneImg");
 let evolutionOneName = document.getElementById("evolutionOneName");
 // Background
@@ -38,9 +39,9 @@ searchBtn.addEventListener('click', async () => {
 });
 
 randomBtn.addEventListener('click', async () => {
-    const randNum = Math.floor(Math.random() * 10); // find number of pokedex?
-    if (inputField.value) {
-        currentPokemon = await pokemonApi(inputField.value.toLowerCase());
+    const randNum = Math.floor(Math.random() * 649);
+    if (randNum) {
+        currentPokemon = await pokemonApi(randNum);
     }
 });
 
@@ -59,16 +60,16 @@ favHeartBtn.addEventListener('click', () => {
 
 //Shiny Icon Button
 shinyFormBtn.addEventListener('click', () => {
-    if (pokeImgDefault) {
+    if (!pokeImgDefault) {
         img.src = pokemonApiData.sprites.other["official-artwork"].front_default;
-        pokeImgDefault = false;
+        pokeImgDefault = true;
         shinyIcon.src = "./assets/Sparkle.png";
-        console.log("clicked");
+        console.log("clicked - should be default picture & unfilled icon");
     } else {
         img.src = pokemonApiData.sprites.other["official-artwork"].front_shiny;
-        pokeImgDefault = true;
+        pokeImgDefault = false;
         shinyIcon.src = "./assets/SparkleFilled.png";
-        console.log("clicked");
+        console.log("clicked - should be SHINY picture & FILLED icon");
     }
 });
 
@@ -89,13 +90,14 @@ const pokemonApi = async (pokemon) => {
     shinyIcon.src = "./assets/Sparkle.png";
 
     let pokeTypesArr = pokemonApiData.types;
-    let pokeTypes = pokeTypesArr.map(element => (element.type.name));
-    type.textContent = pokeTypes.join(", ");
+    let pokeTypes = pokeTypesArr.map(element => element.type.name);
+    // type.textContent = pokeTypes.join(", ");
+    type.textContent = pokeTypes.map(capitalizeFirstLetter).join(", ");
     background.className = backgroundClasses[pokeTypes[0]];
 
     let pokemonEncounterData = await encounterApi(pokemon);
     if (!pokemonEncounterData.length == 0) {
-        location.textContent = capitalizeFirstLetter(pokemonEncounterData[0]["location_area"].name);
+        location.textContent = capitalizeAndRemoveHyphens(pokemonEncounterData[0]["location_area"].name);
     } else {
         location.textContent = "N/a";
     }
@@ -108,7 +110,66 @@ const pokemonApi = async (pokemon) => {
     const pokeMoves = pokeMovesArr.map(element => capitalizeFirstLetter(element.move.name));
     moves.textContent = pokeMoves.join(", ");
 
-    // How do i want to do evolution section?
+    const speciesPromise = await fetch(`${pokemonApiData.species.url}`);
+    const speciesData = await speciesPromise.json();
+    console.log(speciesData);
+
+    const evolutionPromise = await fetch(`${speciesData.evolution_chain.url}`);
+    const evolutionData = await evolutionPromise.json();
+    console.log(evolutionData);
+
+    if (evolutionData.chain.evolves_to.length === 0) {
+        evolutionDiv.textContent = "N/a";
+    } else {
+        // const traverseEvolutions = (initialChain) => {
+        //     const stack = [initialChain]; // Initialize a stack with the initialChain
+        //     const evolutionsArr = [];
+        //     // Start a loop that continues until the stack is empty
+        //     while (stack.length > 0) {
+        //         const currentChain = stack.pop(); // Pop the last element from the stack & assign it to currentChain
+        //         evolutionsArr.push(currentChain.species.name); // Push the name of the current species into the evolutionsArr array
+        //         // Check if the current species has evolutions
+        //         if (currentChain.evolves_to.length > 0) {
+        //             stack.push(...currentChain.evolves_to.reverse()); // Add the evolutions to the stack in reverse order to mimic recursion
+        //         }
+        //     }
+        //     return evolutionsArr; // Return the array containing the names of Pokémon in the evolution chain
+        // };
+        // const evolutionsArr = traverseEvolutions(evolutionData.chain);
+
+        const evolutionArr = [evolutionData.chain.species.name];
+        //Recursive Function
+        const traverseEvolutions = (chain) => {
+            // Base case
+            if (chain.evolves_to.length === 0) return;
+            // Recursive case
+            chain.evolves_to.forEach((evolution) => {
+                evolutionArr.push(evolution.species.name);
+                traverseEvolutions(evolution); // Continues until base case is reached
+            });
+        };
+        traverseEvolutions(evolutionData.chain);
+        
+        evolutionDiv.innerHTML = "";
+        evolutionArr.map(async (pokemonName) => {
+            const div = document.createElement('div');
+            div.className = ("flex-grow text-center px-5");
+            
+            const imgPromise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}/`);
+            const imgData = await imgPromise.json();
+            
+            const imgTag = document.createElement('img');
+            imgTag.src = imgData.sprites.other["official-artwork"].front_default;
+            
+            const p = document.createElement('p');
+            p.textContent = capitalizeFirstLetter(pokemonName);
+
+            div.append(imgTag);
+            div.append(p);
+
+            evolutionDiv.append(div);
+        });
+    }
 
 };
 
@@ -122,83 +183,30 @@ function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+function capitalizeAndRemoveHyphens(str) {
+    const words = str.split('-');
+    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    return capitalizedWords.join(' ');
+}
+
 //Background
 const backgroundClasses = {
-	normal: 'bg-normal',
-	fire: 'bg-fire',
-	water: 'bg-water',
-	electric: 'bg-electric',
-	grass: 'bg-grass',
-	ice: 'bg-ice',
-	fighting: 'bg-fighting',
-	poison: 'bg-poison',
-	ground: 'bg-ground',
-	flying: 'bg-flying',
-	psychic: 'bg-psychic',
-	bug: 'bg-bug',
-	rock: 'bg-rock',
-	ghost: 'bg-ghost',
-	dragon: 'bg-dragon',
-	dark: 'bg-dark',
-	steel: 'bg-steel',
-	fairy: 'bg-fairy',
+    normal: 'bg-normal',
+    fire: 'bg-fire',
+    water: 'bg-water',
+    electric: 'bg-electric',
+    grass: 'bg-grass',
+    ice: 'bg-ice',
+    fighting: 'bg-fighting',
+    poison: 'bg-poison',
+    ground: 'bg-ground',
+    flying: 'bg-flying',
+    psychic: 'bg-psychic',
+    bug: 'bg-bug',
+    rock: 'bg-rock',
+    ghost: 'bg-ghost',
+    dragon: 'bg-dragon',
+    dark: 'bg-dark',
+    steel: 'bg-steel',
+    fairy: 'bg-fairy',
 };
-
-function backgroundChange(pokemonType) {
-    switch (pokemonType) {
-        case "normal":
-            background.className = "";
-            break;
-        case "fire":
-            background.className = "";
-            break;
-        case "water":
-            background.className = "";
-            break;
-        case "electric":
-            background.className = "";
-            break;
-        case "grass":
-            background.className = "bg-[]";
-            break;
-        case "ice":
-            background.className = "";
-            break;
-        case "fighting":
-            background.className = "";
-            break;
-        case "poison":
-            background.className = "";
-            break;
-        case "ground":
-            background.className = "";
-            break;
-        case "flying":
-            background.className = "";
-            break;
-        case "psychic":
-            background.className = "";
-            break;
-        case "bug":
-            background.className = "";
-            break;
-        case "rock":
-            background.className = "";
-            break;
-        case "ghost":
-            background.className = "";
-            break;
-        case "dragon":
-            background.className = "";
-            break;
-        case "dark":
-            background.className = "";
-            break;
-        case "steel":
-            background.className = "";
-            break;
-        default:
-            background.className = "";
-            break;
-    }
-}

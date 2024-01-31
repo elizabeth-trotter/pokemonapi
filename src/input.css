@@ -11,6 +11,7 @@
     font-family: 'Palette Mosaic', system-ui;
 }
 
+/* Background Colors */
 .bg-normal {
     background-color: #A8A77A;
 }
@@ -82,3 +83,5 @@
 .bg-fairy {
     background-color: #D685AD;
 }
+
+/* Buttons */

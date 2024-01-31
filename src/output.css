@@ -1414,6 +1414,10 @@ input:checked + .toggle-bg {
   justify-content: space-between;
 }
 
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -1432,6 +1436,10 @@ input:checked + .toggle-bg {
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
+.overflow-auto {
+  overflow: auto;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -1446,6 +1454,10 @@ input:checked + .toggle-bg {
 
 .overflow-x-hidden {
   overflow-x: hidden;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
 }
 
 .whitespace-nowrap {
@@ -1846,6 +1858,8 @@ input:checked + .toggle-bg {
   font-family: 'Palette Mosaic', system-ui;
 }
 
+/* Background Colors */
+
 .bg-normal {
   background-color: #A8A77A;
 }
@@ -1917,6 +1931,8 @@ input:checked + .toggle-bg {
 .bg-fairy {
   background-color: #D685AD;
 }
+
+/* Buttons */
 
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;
