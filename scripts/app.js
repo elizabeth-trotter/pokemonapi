@@ -1,4 +1,6 @@
 import { saveToLocalStorage, getLocalStorage, removeFromLocalStorage } from "./localstorage.js";
+// import { Drawer } from "flowbite";
+// const drawer = new Drawer($targetEl, options, instanceOptions);
 
 // IDs - Pokemon Fields
 let name = document.getElementById("pokeName");
@@ -17,6 +19,7 @@ let background = document.getElementById("background");
 // Buttons
 let favHeartBtn = document.getElementById("favHeartBtn");
 let seeFavoritesBtn = document.getElementById("seeFavoritesBtn");
+let drawerSwipeBtn = document.getElementById("drawer-swipe");
 let heartIcon = document.getElementById("heartIcon");
 let ulForModalFavorites = document.getElementById("ulForModalFavorites");
 
@@ -31,35 +34,36 @@ let inputField = document.getElementById("inputField");
 let currentPokemon, pokemonApiData, pokeImgDefault;
 
 // On Load
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Your code to run on window load or refresh
-    pokemonApi(1);
+    await pokemonApi(1);
+    currentPokemon = pokemonApiData.name;
 });
 
 // Search
 searchBtn.addEventListener('click', async () => {
     if (inputField.value) {
-        currentPokemon = await pokemonApi(inputField.value.toLowerCase());
+        await pokemonApi(inputField.value.toLowerCase());
+        currentPokemon = pokemonApiData.name;
     }
 });
 
 randomBtn.addEventListener('click', async () => {
     const randNum = Math.floor(Math.random() * 649);
     if (randNum) {
-        currentPokemon = await pokemonApi(randNum);
+        await pokemonApi(randNum);
+        currentPokemon = pokemonApiData.name;
     }
 });
 
 inputField.addEventListener('keydown', async (event) => {
     if (inputField.value) {
         if (event.key === 'Enter') {
-            currentPokemon = await pokemonApi(event.target.value.toLowerCase());
+            await pokemonApi(event.target.value.toLowerCase());
+            currentPokemon = pokemonApiData.name;
         }
     }
 });
-
-// Hover Button
-
 
 // Favorite Icon Button
 favHeartBtn.addEventListener('click', () => {
@@ -74,35 +78,81 @@ favHeartBtn.addEventListener('click', () => {
     }
 });
 
-// See Favorites Button
-seeFavoritesBtn.addEventListener('click', async () => {
+// Favorites Buttons
+async function handleSeeFavoritesBtnClick() {
     const favorites = getLocalStorage();
-    
+
     ulForModalFavorites.innerHTML = "";
+
     for (const fav of favorites) {
-        const li = document.createElement('li');
-        const button = document.createElement('button');
+        const div = document.createElement('div');
         const p = document.createElement('p');
         const imgTag = document.createElement('img');
+        const imgBtn = document.createElement('button');
+        const deleteBtn = document.createElement('button');
+        const deleteImg = document.createElement('img');
 
-        li.classList.add("border");
-        button.classList.add("flex", "content-center");
+        div.classList.add("flex", "rounded-lg", "p-2", "w-72");
         p.textContent = capitalizeFirstLetter(fav);
+        p.classList.add("font-bold", "montserrat", "p-2", "flex-1");
+        deleteBtn.classList.add("px-3");
+        deleteImg.src = "../assets/faDeleteLeft.png";
+        deleteImg.classList.add("h-9");
 
         const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${fav}/`);
         const data = await promise.json();
         imgTag.src = data.sprites.other["official-artwork"].front_default;
-        imgTag.classList.add("h-9");
+        imgTag.classList.add("h-9", "px-1");
+        imgBtn.append(imgTag);
 
         let favTypeArr = data.types;
         let favType = favTypeArr.map(element => element.type.name);
-        button.classList.add(backgroundClasses[favType[0]]);
+        div.classList.add(backgroundClasses[favType[0]]);
 
-        button.append(imgTag, p);
-        li.append(button);
-        ulForModalFavorites.append(li);
-    };
-});
+        deleteBtn.append(deleteImg);
+        div.append(imgBtn, p, deleteBtn);
+        ulForModalFavorites.append(div);
+
+        deleteBtn.addEventListener('mouseover', () => {
+            deleteImg.src = "../assets/faDeleteLeftHover.png";
+        });
+
+        deleteBtn.addEventListener('mouseout', () => {
+            deleteImg.src = "../assets/faDeleteLeft.png";
+        });
+        
+        deleteBtn.addEventListener('click', () => {
+            removeFromLocalStorage(fav);
+            if(fav == currentPokemon){
+                const favorites = getLocalStorage();
+
+                if (!favorites.includes(pokemonApiData.name)) {
+                    heartIcon.src = "./assets/HeartEmpty.png";
+                } else {
+                    heartIcon.src = "./assets/HeartFilled.png";
+                }
+            }
+        });
+
+        imgBtn.addEventListener('click', async () => {
+            await pokemonApi(fav);
+            currentPokemon = pokemonApiData.name;
+        });
+
+        imgBtn.addEventListener('mouseover', () => {
+            imgBtn.classList.add("bg-white", "rounded");
+        });
+
+        imgBtn.addEventListener('mouseout', () => {
+            imgBtn.classList.remove("bg-white");
+        });
+    }
+}
+
+seeFavoritesBtn.addEventListener('click', handleSeeFavoritesBtnClick);
+
+drawerSwipeBtn.addEventListener('click', handleSeeFavoritesBtnClick);
+
 
 // Modal Create Favorite Elements
 // function createFavElements(){
@@ -183,7 +233,6 @@ const pokemonApi = async (pokemon) => {
     pokemonApiData = await promise.json();
     console.log(pokemonApiData);
 
-    // favoriteDefault = true; **need to update
     const favorites = getLocalStorage();
 
     if (!favorites.includes(pokemonApiData.name)) {

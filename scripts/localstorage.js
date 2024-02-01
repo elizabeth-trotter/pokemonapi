@@ -1,11 +1,11 @@
-const saveToLocalStorage = (digimon) => {
+const saveToLocalStorage = (pokemon) => {
     // favorites will get the current values in local storage
     // aka saves the array in favorites
     let favorites = getLocalStorage();
 
     // if the name is already included in the local storages, we will not push into favorites (no repeats)
-    if(!favorites.includes(digimon)){
-        favorites.push(digimon);
+    if(!favorites.includes(pokemon)){
+        favorites.push(pokemon);
     }
 
     // JSON.stringify insures whatever we save into local storage is a string
@@ -25,12 +25,12 @@ const getLocalStorage = () => {
     return JSON.parse(localStorageData);
 };
 
-const removeFromLocalStorage = (digimon) => {
+const removeFromLocalStorage = (pokemon) => {
     // we're saving local storage data into favorites variable
     let favorites = getLocalStorage();
 
-    // finding the index of our parameter (digimon)
-    let namedIndex = favorites.indexOf(digimon);
+    // finding the index of our parameter (pokemon)
+    let namedIndex = favorites.indexOf(pokemon);
 
     // remove the name from the array using the .splice method
     favorites.splice(namedIndex, 1);
