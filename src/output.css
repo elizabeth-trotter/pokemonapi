@@ -2146,6 +2146,14 @@ input:checked + .toggle-bg {
     margin-right: 8rem;
   }
 
+  .md\:w-\[45\%\] {
+    width: 45%;
+  }
+
+  .md\:w-1\/2 {
+    width: 50%;
+  }
+
   .md\:p-5 {
     padding: 1.25rem;
   }
