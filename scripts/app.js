@@ -18,6 +18,7 @@ let background = document.getElementById("background");
 let favHeartBtn = document.getElementById("favHeartBtn");
 let seeFavoritesBtn = document.getElementById("seeFavoritesBtn");
 let heartIcon = document.getElementById("heartIcon");
+let ulForModalFavorites = document.getElementById("ulForModalFavorites");
 
 let shinyFormBtn = document.getElementById("shinyFormBtn");
 let shinyIcon = document.getElementById("shinyIcon");
@@ -28,6 +29,12 @@ let inputField = document.getElementById("inputField");
 
 // Global JavaScript Variabls
 let currentPokemon, pokemonApiData, pokeImgDefault;
+
+// On Load
+document.addEventListener('DOMContentLoaded', function() {
+    // Your code to run on window load or refresh
+    pokemonApi(1);
+});
 
 // Search
 searchBtn.addEventListener('click', async () => {
@@ -62,8 +69,43 @@ favHeartBtn.addEventListener('click', () => {
         saveToLocalStorage(pokemonApiData.name);
         heartIcon.src = "./assets/HeartFilled.png";
     }
-
 });
+
+// See Favorites Button
+seeFavoritesBtn.addEventListener('click', async () => {
+    const favorites = getLocalStorage();
+    
+    ulForModalFavorites.innerHTML = "";
+    for (const fav of favorites) {
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        const p = document.createElement('p');
+        const imgTag = document.createElement('img');
+
+        li.classList.add("border");
+        button.classList.add("flex", "content-center");
+        p.textContent = capitalizeFirstLetter(fav);
+
+        const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${fav}/`);
+        const data = await promise.json();
+        imgTag.src = data.sprites.other["official-artwork"].front_default;
+        imgTag.classList.add("h-9");
+
+        let favTypeArr = data.types;
+        let favType = favTypeArr.map(element => element.type.name);
+        button.classList.add(backgroundClasses[favType[0]]);
+
+        button.append(imgTag, p);
+        li.append(button);
+        ulForModalFavorites.append(li);
+    };
+});
+
+// Modal Create Favorite Elements
+// function createFavElements(){
+
+    
+// }
 
 // getFavoritesBtn.addEventListener('click', () => {
 //     // this retrieves our data from local storage and stores it into favorites variable
