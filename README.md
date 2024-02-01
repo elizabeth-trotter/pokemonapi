@@ -25,8 +25,9 @@ Key Features:
 
 
 ### Peer Review
-**Name:** first and last **Date / Time:** x/xx/xx xx:x pm
+**Name:** Adrian Martinez **Date / Time:** 2/01/24 2:50 PM
 
 **Comment(s):**
+The site functions and runs as expected, the design and layout looks nice, and is generally responsive to all screen sizes. There were some issues, most visually, such as some text overlapping with each other when device width is small. Clicking on one of the evolution paths, there is no way to load up one of the forms selected, would be a nice quality of life addition to not have to search for it that way. Otherwise, it looks and runs great!
 
 
