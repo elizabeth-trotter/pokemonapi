@@ -84,4 +84,33 @@
     background-color: #D685AD;
 }
 
+/* Input */
+/* Styles for the input with id 'inputField' */
+#inputField {
+    border-radius: 5px;
+    outline: none; /* Remove default blue highlight on focus */
+}
+
+/* Customize the highlight color on focus */
+#inputField:focus {
+    margin: 0 10px 0 5px;
+    border-color: black;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
 /* Buttons */
+#randomBtn:hover {
+    /* background-color: white; */
+    border-radius: 5px;
+    border-color: black;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s;
+}
+
+#searchBtn:hover {
+    /* background-color: white; */
+    border-radius: 5px;
+    border-color: black;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s;
+}

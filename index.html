@@ -16,7 +16,7 @@
 
 <body id="background" class="bg-electric">
 
-    <main class="flex flex-wrap mx-10 sm:mx-20 md:mx-32 lg:mx-20 2xl:mx-40 h-screen py-16">
+    <main class="flex flex-wrap mx-10 sm:mx-20 md:mx-32 lg:mx-20 2xl:mx-40 py-16">
         <header class="w-full lg:w-[45%]">
             <nav>
                 <h1 class="palette-mosaic text-5xl sm:text-7xl pb-10">Pokedex</h1>
@@ -27,10 +27,10 @@
                     <input id="inputField"
                         class="montserrat text-xl font-medium border-none w-full flex-1 px-4 bg-transparent" type="text"
                         placeholder="Pokémon name/ number">
-                    <button id="searchBtn">
+                    <button id="searchBtn" class="icon-btn px-1 py-1">
                         <img class="h-7" src="./assets/faSearch.png" alt="search icon">
                     </button>
-                    <button id="randomBtn" class="mx-4 lg:mx-2 xl:mx-4">
+                    <button id="randomBtn" class="mx-2 lg:mx-1 xl:mx-2 icon-btn px-1 py-1">
                         <img class="h-7" src="./assets/faRandom.png" alt="random icon">
                     </button>
                 </div>
@@ -84,7 +84,7 @@
                 <div class="pt-10 w-full">
                     <h3 class="font-bold">Evolution:</h3>
                     <div id="evolutionDiv"
-                        class="h-48 overflow-x-auto flex justify-between items-center text-base sm:text-lg md:text-xl lg:text-lg xl:text-2xl">
+                        class="overflow-x-auto flex justify-between items-center text-base sm:text-lg md:text-xl lg:text-lg xl:text-2xl">
                         <div class="w-1/5 text-center">
                             <img id="evolutionOneImg" src="./assets/pichu.png" alt="pokemon evolution image">
                             <p id="evolutionOneName">Pichu</p>

@@ -58,6 +58,9 @@ inputField.addEventListener('keydown', async (event) => {
     }
 });
 
+// Hover Button
+
+
 // Favorite Icon Button
 favHeartBtn.addEventListener('click', () => {
     const favorites = getLocalStorage();
