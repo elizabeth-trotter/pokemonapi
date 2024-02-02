@@ -96,7 +96,7 @@ async function handleSeeFavoritesBtnClick() {
         p.textContent = capitalizeFirstLetter(fav);
         p.classList.add("font-bold", "montserrat", "p-2", "flex-1");
         deleteBtn.classList.add("px-3");
-        deleteImg.src = "../assets/faDeleteLeft.png";
+        deleteImg.src = "./assets/faDeleteLeft.png";
         deleteImg.classList.add("h-9");
 
         const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${fav}/`);
@@ -114,11 +114,11 @@ async function handleSeeFavoritesBtnClick() {
         ulForModalFavorites.append(div);
 
         deleteBtn.addEventListener('mouseover', () => {
-            deleteImg.src = "../assets/faDeleteLeftHover.png";
+            deleteImg.src = "./assets/faDeleteLeftHover.png";
         });
 
         deleteBtn.addEventListener('mouseout', () => {
-            deleteImg.src = "../assets/faDeleteLeft.png";
+            deleteImg.src = "./assets/faDeleteLeft.png";
         });
         
         deleteBtn.addEventListener('click', () => {

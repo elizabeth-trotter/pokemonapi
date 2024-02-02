@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./src/output.css">
+    <link rel="stylesheet" href="./output.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Palette+Mosaic&display=swap"
         rel="stylesheet">
     <title>Pokedex</title>
-    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
 </head>
 
 <body id="background" class="bg-electric">
@@ -56,7 +56,10 @@
 
         <aside class="w-full lg:w-[55%] lg:ps-5 xl:ps-16 pt-16 lg:pt-0">
             <div class="hidden lg:flex justify-end pt-6">
-                <button id="seeFavoritesBtn" type="button" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe" class="bg-black h-16 w-72 rounded-lg flex justify-center items-center">
+                <button id="seeFavoritesBtn" type="button" data-drawer-target="drawer-swipe"
+                    data-drawer-show="drawer-swipe" data-drawer-placement="bottom" data-drawer-edge="true"
+                    data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe"
+                    class="bg-gray-800 h-16 w-72 rounded-lg flex justify-center items-center">
                     <p class="text-white montserrat font-semibold text-2xl pe-3">Open Favorites</p>
                     <img class="h-8" src="./assets/faHeart.png" alt="heart icon">
                 </button>
@@ -109,27 +112,36 @@
         </aside>
     </main>
 
-<!-- drawer init and toggle -->
-<!-- <div class="text-center">
+    <!-- drawer init and toggle -->
+    <!-- <div class="text-center">
     <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe">
     Show swipeable drawer
     </button>
  </div> -->
- 
- <!-- drawer component -->
- <div id="drawer-swipe" class="fixed z-40 w-full overflow-y-auto bg-white border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform left-0 right-0 translate-y-full bottom-[60px] lg:bottom-0" tabindex="-1" aria-labelledby="drawer-swipe-label">
-    <div class="p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700" data-drawer-toggle="drawer-swipe">
-       <span class="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600"></span>
-       <h5 id="drawer-swipe-label" class="inline-flex items-center text-base montserrat text-gray-500 dark:text-gray-400 font-bold"><img class="h-4 pe-1" src="./assets/HeartFilled.png">Favorite Pokémon</h5>
-    </div>
-    <div class="pb-10">
-        <div class="px-4 md:px-10">
-            <div id="ulForModalFavorites" class="my-5 flex flex-wrap gap-5"></div>
-    </div>
- </div>
- 
 
-    <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
+    <!-- drawer component -->
+    <div id="drawer-swipe"
+        class="fixed z-40 w-full overflow-y-auto border-t rounded-t-lg border-gray-700 bg-gray-800 transition-transform left-0 right-0 translate-y-full bottom-[60px] lg:bottom-0"
+        tabindex="-1" aria-labelledby="drawer-swipe-label">
+        <div class="p-4 cursor-pointer hover:bg-gray-700" data-drawer-toggle="drawer-swipe">
+            <span
+                class="absolute w-8 h-1 -translate-x-1/2 rounded-lg top-3 left-1/2 bg-white"></span>
+            <h5 id="drawer-swipe-label"
+                class="inline-flex items-center text-base montserrat text-white font-bold"><img
+                    class="h-4 pe-1" src="./assets/faHeart.png">Favorite Pokémon</h5>
+        </div>
+        <div class="">
+            <div class="px-4 md:px-10">
+                <div id="ulForModalFavorites" class="my-5 flex flex-wrap justify-center gap-5"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+
+    <!-- <script src="./node_modules/flowbite/dist/flowbite.min.js"></script> -->
     <script type="module" src="./scripts/app.js"></script>
 </body>
 
