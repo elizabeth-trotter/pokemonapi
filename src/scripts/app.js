@@ -1,6 +1,4 @@
 import { saveToLocalStorage, getLocalStorage, removeFromLocalStorage } from "./localstorage.js";
-// import { Drawer } from "flowbite";
-// const drawer = new Drawer($targetEl, options, instanceOptions);
 
 // IDs - Pokemon Fields
 let name = document.getElementById("pokeName");
@@ -22,10 +20,8 @@ let seeFavoritesBtn = document.getElementById("seeFavoritesBtn");
 let drawerSwipeBtn = document.getElementById("drawer-swipe");
 let heartIcon = document.getElementById("heartIcon");
 let ulForModalFavorites = document.getElementById("ulForModalFavorites");
-
 let shinyFormBtn = document.getElementById("shinyFormBtn");
 let shinyIcon = document.getElementById("shinyIcon");
-
 let searchBtn = document.getElementById("searchBtn");
 let randomBtn = document.getElementById("randomBtn");
 let inputField = document.getElementById("inputField");
@@ -150,67 +146,7 @@ async function handleSeeFavoritesBtnClick() {
 }
 
 seeFavoritesBtn.addEventListener('click', handleSeeFavoritesBtnClick);
-
 drawerSwipeBtn.addEventListener('click', handleSeeFavoritesBtnClick);
-
-
-// Modal Create Favorite Elements
-// function createFavElements(){
-
-    
-// }
-
-// getFavoritesBtn.addEventListener('click', () => {
-//     // this retrieves our data from local storage and stores it into favorites variable
-//     let favorites = getLocalStorage();
-
-//     // clears div so the array displayed will not constantly repeat
-//     getFavoritesDiv.textContent = "";
-
-//     // map through each element in our array
-//     favorites.map(digiName => {
-//         // creating a p tag dynamically
-//         let p = document.createElement("p"); // for every digimon in this array, we create a p tag
-
-//         // setting text content to digiName
-//         p.textContent = digiName;
-
-//         // className replaces all classes with our new classes
-//         p.className = "text-lg font-medium text-gray-500 dark:text-white"
-
-//         // creating button dynamically
-//         let button = document.createElement("button");
-
-//         button.type = "button";
-//         button.textContent = "X";
-//         // classList allows us to be a little more concise, it doesnt replace all classes
-//         button.classList.add(
-//             "text-gray-400",
-//             "bg-transparent",
-//             "hover:bg-gray-200",
-//             "hover:text-gray-900",
-//             "rounded-lg",
-//             "text-sm",
-//             "w-8",
-//             "h-8",
-//             "justify-end",
-//             "dark:hover:bg-gray-600",
-//             "dark:hover:text-white"
-//         );
-
-//         // creating addeventlistener for button to remove digiName from favorites when delete is clicked
-//         button.addEventListener('click', () => {
-//             removeFromLocalStorage(digiName);
-//             p.remove();
-//         });
-
-//         // appending button to p tag
-//         p.append(button);
-
-//         // appending p tag to div
-//         getFavoritesDiv.append(p);
-//     });
-// });
 
 //Shiny Icon Button
 shinyFormBtn.addEventListener('click', () => {
@@ -218,12 +154,10 @@ shinyFormBtn.addEventListener('click', () => {
         img.src = pokemonApiData.sprites.other["official-artwork"].front_default;
         pokeImgDefault = true;
         shinyIcon.src = "./assets/Sparkle.png";
-        console.log("clicked - should be default picture & unfilled icon");
     } else {
         img.src = pokemonApiData.sprites.other["official-artwork"].front_shiny;
         pokeImgDefault = false;
         shinyIcon.src = "./assets/SparkleFilled.png";
-        console.log("clicked - should be SHINY picture & FILLED icon");
     }
 });
 
@@ -231,7 +165,6 @@ shinyFormBtn.addEventListener('click', () => {
 const pokemonApi = async (pokemon) => {
     const promise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}/`);
     pokemonApiData = await promise.json();
-    console.log(pokemonApiData);
 
     const favorites = getLocalStorage();
 
@@ -244,7 +177,7 @@ const pokemonApi = async (pokemon) => {
     let pokeName = pokemonApiData.name;
     name.textContent = pokeName.charAt(0).toUpperCase() + pokeName.slice(1);
 
-    const pokeNum = pokemonApiData.id.toString().padStart(3, '0'); //The padStart(3, '0') method pads the string representation with leading zeros to ensure it has a length of 3 characters
+    const pokeNum = pokemonApiData.id.toString().padStart(3, '0');
     num.textContent = pokeNum;
 
     img.src = pokemonApiData.sprites.other["official-artwork"].front_default;
@@ -253,7 +186,7 @@ const pokemonApi = async (pokemon) => {
 
     let pokeTypesArr = pokemonApiData.types;
     let pokeTypes = pokeTypesArr.map(element => element.type.name);
-    // type.textContent = pokeTypes.join(", ");
+
     type.textContent = pokeTypes.map(capitalizeFirstLetter).join(", ");
     background.className = backgroundClasses[pokeTypes[0]];
 
@@ -274,31 +207,13 @@ const pokemonApi = async (pokemon) => {
 
     const speciesPromise = await fetch(`${pokemonApiData.species.url}`);
     const speciesData = await speciesPromise.json();
-    console.log(speciesData);
 
     const evolutionPromise = await fetch(`${speciesData.evolution_chain.url}`);
     const evolutionData = await evolutionPromise.json();
-    console.log(evolutionData);
 
     if (evolutionData.chain.evolves_to.length === 0) {
         evolutionDiv.textContent = "N/a";
     } else {
-        // const traverseEvolutions = (initialChain) => {
-        //     const stack = [initialChain]; // Initialize a stack with the initialChain
-        //     const evolutionsArr = [];
-        //     // Start a loop that continues until the stack is empty
-        //     while (stack.length > 0) {
-        //         const currentChain = stack.pop(); // Pop the last element from the stack & assign it to currentChain
-        //         evolutionsArr.push(currentChain.species.name); // Push the name of the current species into the evolutionsArr array
-        //         // Check if the current species has evolutions
-        //         if (currentChain.evolves_to.length > 0) {
-        //             stack.push(...currentChain.evolves_to.reverse()); // Add the evolutions to the stack in reverse order to mimic recursion
-        //         }
-        //     }
-        //     return evolutionsArr; // Return the array containing the names of Pokémon in the evolution chain
-        // };
-        // const evolutionsArr = traverseEvolutions(evolutionData.chain);
-
         const evolutionArr = [evolutionData.chain.species.name];
         //Recursive Function
         const traverseEvolutions = (chain) => {
@@ -316,6 +231,7 @@ const pokemonApi = async (pokemon) => {
         evolutionArr.map(async (pokemonName) => {
             const div = document.createElement('div');
             div.className = ("flex-grow text-center px-5");
+            // const imgBtn = document.createElement('button');
 
             const imgPromise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}/`);
             const imgData = await imgPromise.json();
@@ -326,13 +242,16 @@ const pokemonApi = async (pokemon) => {
             const p = document.createElement('p');
             p.textContent = capitalizeFirstLetter(pokemonName);
 
+            // imgBtn.append(imgTag);
             div.append(imgTag);
             div.append(p);
-
             evolutionDiv.append(div);
+
+            // imgBtn.addEventListener('click', async () => {
+            //     await pokemonApi(pokemonName);
+            // });
         });
     }
-
 };
 
 const encounterApi = async (pokemon) => {

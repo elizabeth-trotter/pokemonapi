@@ -14,12 +14,12 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
 </head>
 
-<body id="background" class="bg-electric">
+<body id="background">
 
     <main class="flex flex-wrap mx-10 sm:mx-20 md:mx-32 lg:mx-20 2xl:mx-40 py-16">
         <header class="w-full lg:w-[45%]">
             <nav>
-                <h1 class="palette-mosaic text-5xl sm:text-7xl pb-10">Pokedex</h1>
+                <h1 class="palette-mosaic text-5xl sm:text-7xl pb-10" style="color: #1F2937;">Pokedex</h1>
             </nav>
 
             <section class="lg:pe-10 xl:pe-20 xl:border-r-2 border-black w-full">
@@ -35,7 +35,7 @@
                     </button>
                 </div>
                 <div class="flex items-end pt-10 sm:pt-16">
-                    <h2 id="pokeName" class="pe-5 montserrat font-extrabold text-3xl sm:text-5xl">Pikachu</h2>
+                    <h2 id="pokeName" class="pe-5 montserrat font-extrabold text-3xl sm:text-5xl"></h2>
                     <button id="favHeartBtn">
                         <img id="heartIcon" class="h-12 ps-5" src="./assets/HeartEmpty.png" alt="heart icon">
                     </button>
@@ -49,7 +49,7 @@
                     <button id="shinyFormBtn">
                         <img id="shinyIcon" class="h-14" src="./assets/Sparkle.png" alt="shiny icon">
                     </button>
-                    <h4 class="montserrat font-extrabold text-2xl sm:text-4xl">#<span id="pokeNum">025</span></h4>
+                    <h4 class="montserrat font-extrabold text-2xl sm:text-4xl">#<span id="pokeNum"></span></h4>
                 </div>
             </section>
         </header>
@@ -75,49 +75,20 @@
                         <h3 class="font-bold h-12 mb-4">Moves:</h3>
                     </div>
                     <div class="overflow-hidden">
-                        <p id="pokeType" class="h-12 mb-4 overflow-y-auto">Electric</p>
-                        <p id="pokeLocation" class="h-12 mb-4 overflow-y-auto">Trophy Garden</p>
-                        <p id="pokeAbilities" class="h-12 mb-4 overflow-y-auto">Static, Lighting Rod</p>
-                        <p id="pokeMoves" class="h-32 overflow-y-auto">Mega Punch, Pay Day, Thunder Punch, Slam Double
-                            Kick, Mega Kick,
-                            Headbutt, Body Slam</p>
+                        <p id="pokeType" class="h-12 mb-4 overflow-y-auto"></p>
+                        <p id="pokeLocation" class="h-12 mb-4 overflow-y-auto"></p>
+                        <p id="pokeAbilities" class="h-12 mb-4 overflow-y-auto"></p>
+                        <p id="pokeMoves" class="h-32 overflow-y-auto"></p>
                     </div>
                 </div>
 
                 <div class="pt-10 w-full">
                     <h3 class="font-bold">Evolution:</h3>
-                    <div id="evolutionDiv"
-                        class="overflow-x-auto flex justify-between items-center text-base sm:text-lg md:text-xl lg:text-lg xl:text-2xl">
-                        <div class="w-1/5 text-center">
-                            <img id="evolutionOneImg" src="./assets/pichu.png" alt="pokemon evolution image">
-                            <p id="evolutionOneName">Pichu</p>
-                        </div>
-                        <div class="w-1/6 flex justify-center">
-                            <img class="h-7 xl:h-12" src="./assets/long-arrow-alt-right.png" alt="right arrow">
-                        </div>
-                        <div class="w-1/5 text-center">
-                            <img src="./assets/pikachu.png" alt="pokemon evolution image">
-                            <p>Pikachu</p>
-                        </div>
-                        <div class="w-1/6 flex justify-center">
-                            <img class="h-7 xl:h-12" src="./assets/long-arrow-alt-right.png" alt="right arrow">
-                        </div>
-                        <div class="w-1/5 text-center">
-                            <img src="./assets/raichu.png" alt="pokemon evolution image">
-                            <p>Raichu</p>
-                        </div>
-                    </div>
+                    <div id="evolutionDiv" class="overflow-x-auto flex justify-between items-center text-base sm:text-lg md:text-xl lg:text-lg xl:text-2xl"></div>
                 </div>
             </article>
         </aside>
     </main>
-
-    <!-- drawer init and toggle -->
-    <!-- <div class="text-center">
-    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button" data-drawer-target="drawer-swipe" data-drawer-show="drawer-swipe" data-drawer-placement="bottom" data-drawer-edge="true" data-drawer-edge-offset="bottom-[60px]" aria-controls="drawer-swipe">
-    Show swipeable drawer
-    </button>
- </div> -->
 
     <!-- drawer component -->
     <div id="drawer-swipe"
@@ -138,9 +109,7 @@
     </div>
 
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
-
     <!-- <script src="./node_modules/flowbite/dist/flowbite.min.js"></script> -->
     <script type="module" src="./scripts/app.js"></script>
 </body>
