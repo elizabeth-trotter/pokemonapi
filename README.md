@@ -17,7 +17,7 @@ Initially overwhelmed by the extensive information in the Poke API documentation
 
 ## Website Preview
 
-![Desktop preview]()
+![Desktop preview](./src/assets/pokedex-desktop-preview.png)
 <p align="right">Figure 1: Pokedex in action on desktop</p>
 
 ![Mobile preview](./src/assets/pokedex-mobile-preview.png)
