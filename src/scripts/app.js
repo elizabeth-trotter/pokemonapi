@@ -30,7 +30,7 @@ let inputField = document.getElementById("inputField");
 let currentPokemon, pokemonApiData, pokeImgDefault;
 
 // On Load
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async function () {
     // Your code to run on window load or refresh
     await pokemonApi(1);
     currentPokemon = pokemonApiData.name;
@@ -116,10 +116,10 @@ async function handleSeeFavoritesBtnClick() {
         deleteBtn.addEventListener('mouseout', () => {
             deleteImg.src = "./assets/faDeleteLeft.png";
         });
-        
+
         deleteBtn.addEventListener('click', () => {
             removeFromLocalStorage(fav);
-            if(fav == currentPokemon){
+            if (fav == currentPokemon) {
                 const favorites = getLocalStorage();
 
                 if (!favorites.includes(pokemonApiData.name)) {
@@ -186,7 +186,6 @@ const pokemonApi = async (pokemon) => {
 
     let pokeTypesArr = pokemonApiData.types;
     let pokeTypes = pokeTypesArr.map(element => element.type.name);
-
     type.textContent = pokeTypes.map(capitalizeFirstLetter).join(", ");
     background.className = backgroundClasses[pokeTypes[0]];
 
@@ -228,10 +227,12 @@ const pokemonApi = async (pokemon) => {
         traverseEvolutions(evolutionData.chain);
 
         evolutionDiv.innerHTML = "";
-        evolutionArr.map(async (pokemonName) => {
+
+        for (let i = 0; i < evolutionArr.length; i++) {
+            let pokemonName = evolutionArr[i];
             const div = document.createElement('div');
             div.className = ("flex-grow text-center px-5");
-            // const imgBtn = document.createElement('button');
+            const imgBtn = document.createElement('button');
 
             const imgPromise = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}/`);
             const imgData = await imgPromise.json();
@@ -242,15 +243,15 @@ const pokemonApi = async (pokemon) => {
             const p = document.createElement('p');
             p.textContent = capitalizeFirstLetter(pokemonName);
 
-            // imgBtn.append(imgTag);
-            div.append(imgTag);
+            imgBtn.append(imgTag);
+            div.append(imgBtn);
             div.append(p);
             evolutionDiv.append(div);
 
-            // imgBtn.addEventListener('click', async () => {
-            //     await pokemonApi(pokemonName);
-            // });
-        });
+            imgBtn.addEventListener('click', async () => {
+                await pokemonApi(pokemonName);
+            });
+        }
     }
 };
 

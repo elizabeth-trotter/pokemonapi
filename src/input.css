@@ -114,3 +114,13 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     transition: background-color 0.3s;
 }
+
+/* Evolution Images */
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.visible {
+    opacity: 1;
+}
