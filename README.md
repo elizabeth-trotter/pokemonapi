@@ -2,7 +2,9 @@
 
 **Name:** Elizabeth Trotter
 
-**Project Scope:** Created a single page Pokémon application using [PokéAPI](https://pokeapi.co/). The design was Prototyped in Figma for (Desktop, Tablet, Mobile).
+**Project Scope:** This project is a single page Pokémon application that fetches data from [PokéAPI](https://pokeapi.co/). The design was prototyped in `Figma` for Desktop, Tablet, and Mobile and the site was made fully responsive with `Tailwind CSS`. 
+
+Initially overwhelmed by the extensive information in the Poke API documentation, I took the time to explore its various `endpoints`. Despite the initial challenge of navigating the massive dataset, this project enabled me to understand the communication between endpoints and the overall organization of the dataset.
 
 ***Key Features:***
 
@@ -18,17 +20,17 @@
 ![Desktop preview](./src/assets/pokedex-desktop-preview.png)
 <p align="right">Figure 1: Pokedex in action on desktop</p>
 
-![Tablet preview](./src/assets/pokedex-tablet-preview.png)
-<p align="right">Figure 2: Tablet Pokedex in action</p>
-
 ![Mobile preview](./src/assets/pokedex-mobile-preview.png)
-<p align="right">Figure 3: Viewing favorites list on mobile Pokedex</p>
+<p align="left">Figure 2: Viewing favorites list on mobile Pokedex</p>
 
 
 ## Prototype
 
 Click [Prototype](https://www.figma.com/proto/4JBQZiPG5JpQwJW4ZMutBj/Pokedex?type=design&node-id=1-2&t=M7vml5Ytx95oT6JE-1&scaling=contain&page-id=0%3A1&starting-point-node-id=1%3A2&show-proto-sidebar=1&mode=design) 
 to visit the **Figma prototype design**.
+
+![Figma preview](./src/assets/figma-preview.png)
+<p align="left">Figure 3: Figma desktop design for Pikachu</p>
 
 
 ---
