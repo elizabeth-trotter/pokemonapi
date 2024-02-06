@@ -18,11 +18,13 @@ Initially overwhelmed by the extensive information in the Poke API documentation
 ## Website Preview
 
 ![Desktop preview](./src/assets/pokedex-desktop-preview.png)
-<p align="right">Figure 1: Pokedex in action on desktop</p>
+<p align="right">Figure 1: Pokedex in action on Desktop</p>
 
-<img align="center" src="./src/assets/pokedex-mobile-preview.png" alt="Mobile preview">
-<p align="left">Figure 2: Viewing favorites list on mobile Pokedex</p>
-
+<div align="center">
+<img src="./src/assets/pokedex-tablet-preview.png" alt="Mobile preview" height="500">
+<img src="./src/assets/pokedex-mobile-preview.png" alt="Mobile preview" height="500">
+<p>Figure 2 & 3: Viewing favorites list on Tablet & Mobile Pokedex</p>
+</div>
 
 ## Prototype
 
@@ -30,7 +32,7 @@ Click [Prototype](https://www.figma.com/proto/4JBQZiPG5JpQwJW4ZMutBj/Pokedex?typ
 to visit the **Figma prototype design**.
 
 ![Figma preview](./src/assets/figma-preview.png)
-<p align="left">Figure 3: Figma desktop design for Pikachu</p>
+<p align="left">Figure 4: Figma desktop design for Pikachu</p>
 
 
 ---
