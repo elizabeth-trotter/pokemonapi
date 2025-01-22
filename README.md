@@ -21,7 +21,7 @@ Initially overwhelmed by the extensive information in the Poke API documentation
 <p align="right">Figure 1: Pokedex in action on Desktop</p>
 
 <div align="center">
-<img src="./src/assets/pokedex-tablet-preview.png" alt="Mobile preview" height="500">
+<img src="./src/assets/pokedex-tablet-preview.png" alt="Mobile preview" height="500">&emsp;
 <img src="./src/assets/pokedex-mobile-preview.png" alt="Mobile preview" height="500">
 <p>Figure 2 & 3: Viewing favorites list on Tablet & Mobile Pokedex</p>
 </div>
